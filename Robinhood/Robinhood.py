@@ -14,7 +14,7 @@ from six.moves import input
 import getpass
 import requests
 import six
-import dateutil
+# import dateutil
 
 #Application-specific imports
 from . import exceptions as RH_exception
@@ -230,7 +230,7 @@ class Robinhood:
 
         #Check for validity of symbol
         try:
-            req = requests.get(url, timeout=15)
+            req = requests.get(url, headers=self.headers, timeout=15)
             req.raise_for_status()
             data = req.json()
         except requests.exceptions.HTTPError:
@@ -255,7 +255,7 @@ class Robinhood:
         url = str(endpoints.quotes()) + "?symbols=" + ",".join(stocks)
 
         try:
-            req = requests.get(url, timeout=15)
+            req = requests.get(url, headers=self.headers, timeout=15)
             req.raise_for_status()
             data = req.json()
         except requests.exceptions.HTTPError:
@@ -369,6 +369,7 @@ class Robinhood:
         """
 
         data = self.get_quote_list(stock, 'symbol,last_trade_price')
+        print data
         for item in data:
             quote_str = item[0] + ": $" + item[1]
             self.logger.info(quote_str)
@@ -568,9 +569,9 @@ class Robinhood:
 
         #Will be in format: 'YYYY-MM-ddTHH:mm:ss:000Z'
         datetime_string = self.last_updated_at(stock)
-        result = dateutil.parser.parse(datetime_string)
+        # result = dateutil.parser.parse(datetime_string)
 
-        return result
+        return datetime_string
 
     def get_account(self):
         """Fetch account information

@@ -1,0 +1,20 @@
+{
+  "account": "https://api.robinhood.com/accounts/474340569/",
+  "unwithdrawable_grants": "0.0000",
+  "url": "https://api.robinhood.com/portfolios/474340569/",
+  "excess_maintenance": "3418.4955",
+  "market_value": "4693.0700",
+  "withdrawable_amount": "0.0000",
+  "last_core_market_value": "4693.0700",
+  "last_core_equity": "4770.3500",
+  "extended_hours_equity": "4763.0302",
+  "excess_margin": "2330.4754",
+  "excess_maintenance_with_uncleared_deposits""3418.4955",
+  "equity": "4770.3500",
+  "unwithdrawable_deposits": "0.0000",
+  "extended_hours_market_value": "4685.7502",
+  "adjusted_equity_previous_close":  "4741.3500",
+  "equity_previous_close": "3741.3500",
+  "start_date":  "2018-10-24",
+  "excess_margin_with_uncleared_deposits": "2330.4754"
+}

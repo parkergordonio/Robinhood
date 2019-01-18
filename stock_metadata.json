@@ -1,0 +1,16 @@
+{
+u'previous_close': u'8.730000',
+u'has_traded': True,
+u'last_trade_price': u'8.980000',
+u'last_extended_hours_trade_price': u'8.950000',
+u'adjusted_previous_close': u'8.730000',
+u'last_trade_price_source': u'consolidated',
+u'updated_at': u'2019-01-17T00:58:14Z',
+u'ask_price': u'8.970000',
+u'instrument': u'https://api.robinhood.com/instruments/39ff611b-84e7-425b-bfb8-6fe2a983fcf3/',
+u'symbol': u'GE',
+u'trading_halted': False,
+u'ask_size': 600,
+u'bid_price': u'8.970000',
+u'previous_close_date': u'2019-01-15',
+u'bid_size': 96400}
