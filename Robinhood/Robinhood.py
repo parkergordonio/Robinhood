@@ -169,6 +169,7 @@ class Robinhood:
         return data
 
 
+
     def instruments(self, stock):
         """Fetch instruments endpoint
 
@@ -209,6 +210,27 @@ class Robinhood:
             raise RH_exception.InvalidInstrumentId()
 
         return data['results']
+
+
+    def instrument_from_link(self, url):
+        """Fetch instrument info
+
+            Args:
+                url (str): url to instrument data
+
+            Returns:
+                (:obj:`dict`): JSON dict of instrument
+        """
+        # url = str(endpoints.instruments()) + "?symbol=" + str(id)
+
+        try:
+            req = requests.get(url, timeout=15)
+            req.raise_for_status()
+            data = req.json()
+        except requests.exceptions.HTTPError:
+            raise RH_exception.InvalidInstrumentId()
+
+        return data
 
 
     def quote_data(self, stock=''):
