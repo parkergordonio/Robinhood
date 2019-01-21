@@ -16,7 +16,16 @@ class Performance:
         inv_rounded =  "{0:.2f}".format(self.initial_investment())
         return str(inv_rounded)
 
+    def return_performance(self):
+        return_float = (float(100) * (float(self.current_price) * float(self.units)) / float(self.initial_investment())) - 100
+        return_rounded = "{0:.2f}".format(return_float)
+        return return_rounded
 
+def json_print(j):
+    print(json.dumps(j, indent=4, sort_keys=True))
+
+def round(x):
+    return "{0:.2f}".format(x)
 
 # Password
 robin_pass = os.environ['xcFrd']
@@ -46,12 +55,13 @@ all_stocks = positions['results']
 owned_stocks = list(filter(lambda x: float(x['quantity']) > 0, all_stocks))
 
 def toPerformance(i):
+    print("...")
     instrument_link = i['instrument']
     # Get Symbol, Quote from instrument
-    print("Using Instrument link: " + instrument_link)
+    # print("Using Instrument link: " + instrument_link)
     instrument = my_trader.instrument_from_link(instrument_link)
     quote_data = my_trader.quote_data(instrument['symbol'])
-    
+    #print(json.dumps(quote_data, indent=4, sort_keys=True))
     perf = Performance()
     perf.units = i['quantity']
     perf.average_buy_price = i['average_buy_price']
@@ -62,9 +72,7 @@ def toPerformance(i):
 
 stock_performance = list(map(lambda x: toPerformance(x), owned_stocks))
 
-
-#performance = list(map(lambda x: float(x['quantity']) * float(x['average_buy_price']), owned_stocks))
-
+stock_performance.sort(reverse=True, key=lambda p: float(p.return_performance()))
 
 # print("\n\n\nPORTFOLIO DATA \n\n\n")
 portfolio = my_trader.portfolios()
@@ -80,24 +88,40 @@ print("---------------------------------")
 print("| Stocks\t| $" + stockValue + "\t|")
 print("| Cash  \t| $" + str(cashValue) + "\t|")
 print("_________________________________")
-print("\n\n")
+print("\n")
 print("---------------------------------")
 print("|\tStock Performance \t|")
 print("---------------------------------")
 
 for p in stock_performance:
-    print("| Symb: (" + p.symbol + ")\t\t\t|")
-    print("|   Invested: $(" + p.inital_investment_str() + ")\t\t|")
+    print("| (" + p.symbol + ")  \t\t\t|")
+    print("|   Invested: $(" + p.inital_investment_str() + ")  \t|")
     print("|   Value: $(" + str(float(p.current_price) * float(p.units)) + ") \t\t|")
     return_float = (float(100) * (float(p.current_price) * float(p.units)) / float(p.initial_investment())) - 100
-    return_rounded = "{0:.2f}".format(return_float)
+    return_rounded = round(return_float)
     print("|   Return: (" + str(return_rounded) + ")% \t\t|")
+
 print("_________________________________\n\n")
+print("-----------------------------------------")
+print("|\tReturn Metrics       \t\t|")
+print("-----------------------------------------")
 
-#Get a stock's quote
+stockNum=1
+for p in stock_performance:
+    return_float = (float(100) * (float(p.current_price) * float(p.units)) / float(p.initial_investment())) - 100
+    return_rounded = round(return_float)
+
+    gain = round(float(float(p.current_price) * float(p.units)) - float(p.initial_investment()))
+    print("| " + str(stockNum) + ". (" + str(return_rounded) + ")% (" + p.symbol + "), " + "Gain: $(" + str(gain) + ") \t|")
+    stockNum=stockNum+1
+    # print("|----------------------------------|")
+print("_________________________________________\n\n")
+
+# history=my_trader.order_history()
+# json_print(history)
+
+# print("QUOTE: \n\n")
 # my_trader.print_quote("GE")
-
-# my_trader.print_quote()
 
 # #Print multiple symbols
 # my_trader.print_quotes(stocks=["BBRY", "FB", "MSFT"])
