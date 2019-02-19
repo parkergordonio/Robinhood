@@ -14,8 +14,15 @@ See this [blog post](https://medium.com/@rohanpai25/reversing-robinhood-free-acc
 - More coming soon
 
 ### How To Install:
+#### Install Python Modules
     pip install .
     
+#### Add Robinhood Password Env Variable
+Exit your ~/.bash_profile to export your Robinhood password like:
+```export xcFrd="THIS_IS_YOUR_PASS"```
+
+"xcFrd" is something made up, but provides a bit of obfuscation in the event that someone has access to your terminal when you're not looking. Using "Robinhood_password" would give the attacker enough context to know what to do with it.
+
 ### Converting to Python 3
 Project will work on both python 2 and python 3
 
