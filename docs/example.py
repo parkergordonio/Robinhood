@@ -1,6 +1,27 @@
 from Robinhood import Robinhood
 import os
 import json
+import pyfiglet
+import time,sys
+from pyfiglet import Figlet
+from threading import Thread
+from time import sleep
+os.system('clear')
+
+
+show_loading = False
+def loading_animation(arg):
+    while show_loading:
+        blah="\|/-\|/-"
+        for l in blah:
+            sys.stdout.write(l)
+            sys.stdout.flush()
+            sys.stdout.write('\b')
+            time.sleep(0.2)
+
+
+f = Figlet(font='smslant')
+print f.renderText('Robinhood Performance')
 
 
 class Performance:
@@ -27,14 +48,11 @@ def json_print(j):
 def round(x):
     return "{0:.2f}".format(x)
 
-# Password
-robin_pass = os.environ['xcFrd']
 
-#Setup
-my_trader = Robinhood()
-
-#login
 try:
+    print("Logging User In...")
+    robin_pass = os.environ['xcFrd']
+    my_trader = Robinhood()
     my_trader.login(username="pgaasu@gmail.com", password=robin_pass)
 except:
     print "Could not login. Need 2FA code...."
@@ -50,12 +68,18 @@ except:
 positions = my_trader.positions()
 # print(json.dumps(positions, indent=4, sort_keys=True))
 
+# Start Loading Animation
+show_loading = True
+print("Pulling Robinhood Data...")
+animation_thread = Thread(target = loading_animation, args = (10, ))
+animation_thread.start()
+
+
 # Initial Total Equity
 all_stocks = positions['results']
 owned_stocks = list(filter(lambda x: float(x['quantity']) > 0, all_stocks))
 
 def toPerformance(i):
-    print("...")
     instrument_link = i['instrument']
     # Get Symbol, Quote from instrument
     # print("Using Instrument link: " + instrument_link)
@@ -80,6 +104,10 @@ portfolio = my_trader.portfolios()
 
 stockValue = portfolio['last_core_market_value']
 cashValue = float(portfolio['last_core_equity']) - float(portfolio['last_core_market_value'])
+
+# Complete the Loading Animation
+show_loading = False
+animation_thread.join()
 
 print("\n\n")
 print("---------------------------------")
