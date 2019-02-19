@@ -23,6 +23,9 @@ Exit your ~/.bash_profile to export your Robinhood password like:
 
 "xcFrd" is something made up, but provides a bit of obfuscation in the event that someone has access to your terminal when you're not looking. Using "Robinhood_password" would give the attacker enough context to know what to do with it.
 
+### Running the Tool!
+execute `sh get-metrics.sh`
+
 ### Converting to Python 3
 Project will work on both python 2 and python 3
 
