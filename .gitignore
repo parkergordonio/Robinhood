@@ -51,6 +51,9 @@ coverage.xml
 #Vim stuff
 *.swp
 
+#vscode
+*.vscode
+
 # Django stuff:
 *.log
 
